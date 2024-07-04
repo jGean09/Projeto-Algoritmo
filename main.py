@@ -6,9 +6,8 @@
 #Modulo buscar colocar relatorio
 
 import os
-
-os.system('clear')
 import pickle
+import funcionario
 
 produtos = {}
 try:
@@ -165,13 +164,13 @@ def excluirProdutos():
   input("Tecle <ENTER> para continuar...")
 
 
-linha_sep = "##################################################################################"
-cabecalho = "#######################        Relatório Geral de Produtos       #######################"
-linha_tabela_sep = "|-----------|-----------------------------|--------------------|-----------------|"
-cabecalho_tabela = "|  Código   |        Nome do Produto      |       Preço        |   Quantidade    |"
-
-
 def relatorioGeralProdutos():
+
+  linha_sep = "##################################################################################"
+  cabecalho = "#######################        Relatório Geral de Produtos       #######################"
+  linha_tabela_sep = "|-----------|-----------------------------|--------------------|-----------------|"
+  cabecalho_tabela = "|  Código   |        Nome do Produto      |       Preço        |   Quantidade    |"
+
   print(linha_sep)
   print(cabecalho)
   print(linha_sep)
@@ -208,7 +207,7 @@ def telaGestao():
   print("############################################")
   print("######       Projeto GESTAO-Estoque   ######")
   print("############################################")
-  print("#####      1 - Módulo Usuario          #####")
+  print("#####      1 - Módulo Funcionário      #####")
   print("#####      2 - Módulo Produto/estoque  #####")
   print("#####      3 - Módulo Relatório        #####")
   print("#####      4 - Módulo Informações      #####")
@@ -250,22 +249,30 @@ while end != '0':
   #Gestão de Estoque
   match resp_Geral:
     case '1':
-      resp_estoque = telaUsuario()
-      print("Módulo Usuario")
+      resp_funcionario = funcionario.telaFuncionario()
       #Modulo Usuario
-      match resp_estoque:
+      match resp_funcionario:
         case '1':
           os.system('clear')
-          #telaSaidaProduto()
-          #Esse modulo é pra movimentação do estoque
-          #Simular um saida de produto
-          #saidaProduto()
+          funcionario.cadastrarFuncionario()
+
         case '2':
           os.system('clear')
-          #telaEntradaProduto()
-          #Esse modulo é pra movimentação do estoque
-          #Simular um entrada de produto
-          #entradaProduto()
+          funcionario.BuscarFuncionario()
+        case '3':
+          os.system('clear')
+          funcionario.alterarFuncionario()
+        case '4':
+          os.system('clear')
+          funcionario.excluirFuncionario()
+        case '5':
+          os.system('clear')
+          funcionario.relatorioFuncionarios()
+        case '0':
+          os.system('clear')
+          print("Saindo do módulo de Funcionário...")
+          input("Tecle <ENTER> para continuar...")
+
         case _:
           #Qualquer Número invalido
           os.system('clear')

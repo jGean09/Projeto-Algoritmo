@@ -122,12 +122,23 @@ def excluirFuncionario():
   print("--------------------")
 
   CPF = input("Qual é o CPF do Funcionário que deseja excluir? ")
+
   if CPF in funcionarios:
-    del funcionarios[CPF]
-    print("Funcionário excluído com sucesso!")
-    salvarFuncionarios()
+      print("Funcionário encontrado:")
+      print("##### CPF:", CPF)
+      print("##### Nome:", funcionarios[CPF][0])
+      print("##### Email:", funcionarios[CPF][1])
+      print("--------------------")
+
+      confirmacao = input("Tem certeza que deseja excluir este funcionário? (s/n): ").lower()
+      if confirmacao == 's':
+          del funcionarios[CPF]
+          print("Funcionário excluído com sucesso!")
+          salvarFuncionarios()
+      else:
+          print("Exclusão cancelada.")
   else:
-    print("Funcionário não encontrado.")
+      print("Funcionário não encontrado.")
 
   input("Tecle <ENTER> para continuar...")
 

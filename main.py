@@ -6,14 +6,11 @@
 #Modulo buscar colocar relatorio
 
 import os
+
+os.system('clear')
 import pickle
 
-estoque = []
-produtos = {
-    '123': ["Agua", 5, 10],
-    '456': ["Celular", 1000, 1],
-    '789': ["Cerveja", 4, 12],
-}
+produtos = {}
 try:
   arq_produtos = open("Produtos.dat", "rb")
   produtos = pickle.load(arq_produtos)
@@ -21,8 +18,8 @@ except:
   arq_produtos = open("Produtos.dat", "wb")
   arq_produtos.close()
 
-#############################################################################################
-#################     PRODUTO      #########################
+  #############################################################################################
+  #################     PRODUTO      #########################
 
 
 def cadastrarProduto():
@@ -32,13 +29,31 @@ def cadastrarProduto():
   print()
   print("Cadastro de Produtos")
   print("--------------------")
-  codigo = input("Digite o Codigo do produto: ")
+
+  while True:
+    try:
+      codigo = int(input("Digite o Código do produto: "))
+      if codigo in produtos:
+        print(
+            "Produto com esse código já existe! Por favor, digite um novo código."
+        )
+      else:
+        break
+    except ValueError:
+      print("Código inválido! Por favor, digite um número inteiro.")
+
   nome = input("Digite o nome do produto: ")
   preco = float(input("Digite o preço do produto: "))
   quantidade = int(input("Digite a quantidade do produto: "))
   produtos[codigo] = [nome, preco, quantidade]
-  estoque.append(produtos)
+
   print("Produto cadastrado com sucesso!")
+  print()
+  print("##### Código:", codigo)
+  print("##### Nome: ", produtos[codigo][0])
+  print("##### Preço: R$", produtos[codigo][1])
+  print("##### Quantidade: ", produtos[codigo][2])
+
   input("Pressione ENTER para continuar")
 
 
@@ -50,17 +65,25 @@ def BuscarProduto():
   print()
   print("Buscar Produtos")
   print("--------------------")
-  codtest = input("Qual é o Codigo do Produto?")
-  #Qual é o melhor, listar todos os produtos ou somente 1?
-  #melhor relatorio
-  if codtest in produtos:
-    print("##### Codigo:", codtest)
-    print("##### Nome: ", produtos[codtest][0])
-    print("##### Preço: ", produtos[codtest][1])
-    print("##### Quantidade: ", produtos[codtest][2])
-  else:
-    print("Produto inexistente!")
-    print()
+
+  while True:
+    try:
+      codtest = int(input("Qual é o Código do Produto? "))
+      if codtest in produtos:
+        print("Produto encontrado:")
+        print("##### Código:", codtest)
+        print("##### Nome: ", produtos[codtest][0])
+        print("##### Preço: R$", produtos[codtest][1])
+        print("##### Quantidade: ", produtos[codtest][2])
+        break
+      else:
+        print("Produto inexistente!")
+        input("Tecle <ENTER> para continuar...")
+        os.system('clear')
+    except ValueError:
+      print("Código inválido! Por favor, digite um número inteiro.")
+
+  print()
   input("Tecle <ENTER> para continuar...")
 
 
@@ -72,21 +95,34 @@ def alterarProdutos():
   print()
   print("Alterar Produtos")
   print("--------------------")
-  codtest = input("Qual é o Codigo do Produto?")
-  if codtest in produtos:
-    print("Informe os novos dados do Produto: ")
-    nome = input("##### Nome: ")
-    print()
-    preco = input("##### Preço: ")
-    print()
-    Quantidade = input("##### Quantidade: ")
-    print()
-    produtos[codtest] = [nome, preco, Quantidade]
-    print("Produto Alterado com Sucesso!!")
 
-  else:
-    print("Produto inexistente!")
-    print()
+  while True:
+    try:
+      codtest = int(input("Qual é o Código do Produto? "))
+      if codtest in produtos:
+        print("Produto encontrado:")
+        print("##### Código:", codtest)
+        print("##### Nome: ", produtos[codtest][0])
+        print("##### Preço: R$", produtos[codtest][1])
+        print("##### Quantidade: ", produtos[codtest][2])
+
+        confirmacao = input("Deseja alterar este produto? (s/n): ").lower()
+        if confirmacao == 's':
+          nome = input("Informe o novo nome: ")
+          preco = float(input("Informe o novo preço: "))
+          quantidade = int(input("Informe a nova quantidade: "))
+
+          produtos[codtest] = [nome, preco, quantidade]
+          print("Produto alterado com sucesso!")
+        else:
+          print("Alteração cancelada.")
+        break
+      else:
+        print("Produto inexistente!")
+    except ValueError:
+      print("Código inválido! Por favor, digite um número inteiro.")
+
+  print()
   input("Tecle <ENTER> para continuar...")
 
 
@@ -98,25 +134,60 @@ def excluirProdutos():
   print()
   print("Excluir Produtos")
   print("--------------------")
-  codtest = input("Qual é o Codigo do Produto?")
+
+  while True:
+    try:
+      codtest = int(input("Qual é o Código do Produto? "))
+      break
+    except ValueError:
+      print("Código inválido! Por favor, digite um número inteiro.")
+
   if codtest in produtos:
-    del produtos[codtest]
-    print("Produto Excluído com Sucesso!!")
+    nome, preco, quantidade = produtos[codtest]
+    print("Produto encontrado:")
+    print("##### Código:", codtest)
+    print("##### Nome: ", nome)
+    print("##### Preço: R$", preco)
+    print("##### Quantidade: ", quantidade)
+
+    confirm = input(
+        "Tem certeza que deseja remover este produto? (s/n): ").lower()
+
+    if confirm == 's':
+      del produtos[codtest]
+      print("Produto Excluído com Sucesso!!")
+    else:
+      print("Exclusão de produto cancelada.")
   else:
     print("Produto inexistente!")
-    print()
+
+  print()
   input("Tecle <ENTER> para continuar...")
 
 
-def relatorioProduto():
+linha_sep = "##################################################################################"
+cabecalho = "#######################        Relatório Geral de Produtos       #######################"
+linha_tabela_sep = "|-----------|-----------------------------|--------------------|-----------------|"
+cabecalho_tabela = "|  Código   |        Nome do Produto      |       Preço        |   Quantidade    |"
+
+
+def relatorioGeralProdutos():
+  print(linha_sep)
+  print(cabecalho)
+  print(linha_sep)
+  print(linha_tabela_sep)
+  print(cabecalho_tabela)
+  print(linha_tabela_sep)
+  for codigo in sorted(produtos.keys(), key=int):
+    # Ordenando os códigos numericamente
+    nome, preco, quantidade = produtos[codigo]
+    print("| %-9s " % (codigo), end='')
+    print("| %-27s " % (nome), end='')
+    print("| R$ %-15.2f " % (preco), end='')
+    print("| %-15d |" % (quantidade))
+    print(linha_tabela_sep)
   print()
-  print("############################################")
-  print("#####   Você está no Módulo Relatorio   ####")
-  print("############################################")
-  print()
-  print("Relatorio de Produtos")
-  print("--------------------")
-  print()
+  input("Tecle <ENTER> para continuar...")
 
 
 #
@@ -222,8 +293,9 @@ while end != '0':
           os.system('clear')
           excluirProdutos()
         case '5':
-          #os.system('clear')
+          os.system('clear')
           print()
+          relatorioGeralProdutos()
 
         case 0:
           os.system('clear')
@@ -253,3 +325,7 @@ while end != '0':
       os.system('clear')
       print("Opção inválida")
       input("Tecle <ENTER> para continuar...")
+
+arq_produtos = open("Produtos.dat", "wb")
+pickle.dump(produtos, arq_produtos)
+arq_produtos.close()

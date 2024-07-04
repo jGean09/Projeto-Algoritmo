@@ -156,15 +156,26 @@ def telaUsuario():
   print("############################################")
   resp_estoque = input("##### Escolha sua opção: ")
   return resp_estoque
+
+
 def telaProduto():
   os.system('clear')
   print("############################################")
   print("#####   Módulo Produto Estoque   ######")
+  print("############################################")
+  print("##### 1 - Cadastrar Produto          #####")
+  print("##### 2 - Buscar Produto             #####")
+  print("##### 3 - Alterar Produto            #####")
+  print("##### 4 - Excluir Produto            #####")
+  print("##### 5 - Relatorio Produto          #####")
+  resp_produto = input("##### Escolha sua opção: ")
+  return resp_produto
+
 
 end = ''
 while end != '0':
   resp_Geral = telaGestao()
-  print("resposta: ", resp)
+
   #Gestão de Estoque
   match resp_Geral:
     case '1':
@@ -172,50 +183,57 @@ while end != '0':
       print("Módulo Usuario")
       #Modulo Usuario
       match resp_estoque:
-        case 1:
+        case '1':
           os.system('clear')
           #telaSaidaProduto()
           #Esse modulo é pra movimentação do estoque
           #Simular um saida de produto
           #saidaProduto()
-        case 2:
+        case '2':
           os.system('clear')
           #telaEntradaProduto()
           #Esse modulo é pra movimentação do estoque
           #Simular um entrada de produto
           #entradaProduto()
+        case _:
+          #Qualquer Número invalido
+          os.system('clear')
+          print("Opção inválida")
+          input("Tecle <ENTER> para continuar...")
     case '2':
       #Modulo Produto
       os.system('clear')
 
       #telaProduto()
-      resp = int(input("##### Escolha sua opção: "))
-      match resp:
-        case 1:
+      resp_produto = telaProduto()
+      match resp_produto:
+        case '1':
           os.system('clear')
           cadastrarProduto()
 
-        case 2:
+        case '2':
           os.system('clear')
           BuscarProduto()
-        case 3:
+        case '3':
           os.system('clear')
           alterarProdutos()
 
-        case 4:
+        case '4':
           os.system('clear')
           excluirProdutos()
-        case 5:
+        case '5':
           #os.system('clear')
           print()
-          print("############################################")
-          print("#####   Você está no Módulo Busca       ####")
-          #buscarProduto()
+
         case 0:
           os.system('clear')
           print()
           print("############################################")
-
+        case _:
+          #Qualquer Número invalido
+          os.system('clear')
+          print("Opção inválida")
+          input("Tecle <ENTER> para continuar...")
     case '3':
       #modulo informações
       os.system('clear')

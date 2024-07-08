@@ -209,8 +209,10 @@ def telaGestao():
   print("############################################")
   print("#####      1 - Módulo Funcionário      #####")
   print("#####      2 - Módulo Produto/estoque  #####")
-  print("#####      3 - Módulo Relatório        #####")
-  print("#####      4 - Módulo Informações      #####")
+  print("#####      3 - Módulo Fornecedores     #####")
+  print("#####      4 - Módulo Movimentação     #####")
+  print("#####      5 - Módulo Relatório        #####")
+  print("#####      6 - Módulo Informações      #####")
   print("#####      0 - Sair                    #####")
   resp_inicial = input("##### Escolha sua opção: ")
   return resp_inicial
@@ -238,8 +240,26 @@ def telaProduto():
   print("##### 3 - Alterar Produto            #####")
   print("##### 4 - Excluir Produto            #####")
   print("##### 5 - Relatorio Produto          #####")
+  print("##### 0 - Sair                       #####")
   resp_produto = input("##### Escolha sua opção: ")
   return resp_produto
+
+
+####################FORNECEEDORES####################
+
+
+def telafornecedor():
+  os.system('clear')
+  print("############################################")
+  print("#####   Módulo Fornecedores   ######")
+  print("############################################")
+  print("##### 1 - Cadastrar Fornecedor      #####")
+  print("##### 2 - Buscar Fornecedor         #####")
+  print("##### 3 - Alterar Fornecedor        #####")
+  print("##### 4 - Excluir Fornecedor        #####")
+  print("##### 5 - Relatorio Fornecedor      #####")
+  resp_fornecedor = input("##### Escolha sua opção: ")
+  return resp_fornecedor
 
 
 end = ''
@@ -255,7 +275,6 @@ while end != '0':
         case '1':
           os.system('clear')
           funcionario.cadastrarFuncionario()
-
         case '2':
           os.system('clear')
           funcionario.BuscarFuncionario()
@@ -314,15 +333,40 @@ while end != '0':
           print("Opção inválida")
           input("Tecle <ENTER> para continuar...")
     case '3':
-      #modulo informações
+      #modulo Fornecedores
       os.system('clear')
-      print()
-      print("Relatorio")
-      input("Tecle <ENTER> para continuar...")
+      resp_fornecedor = telafornecedor()
+      match resp_fornecedor:
+        case '1':
+          print("cadastrar")
+          input("Tecle <ENTER> para continuar...")
+        case '2':
+          print("buscar")
+          input("Tecle <ENTER> para continuar...")
+        case '3':
+          print("alterar")
+          input("Tecle <ENTER> para continuar...")
+        case '4':
+          print("excluir")
+          input("Tecle <ENTER> para continuar...")
+        case '5':
+          print("relatorio")
+          input("Tecle <ENTER> para continuar...")
+        case 0:
+          print("sair")
+          input("Tecle <ENTER> para continuar...")
+        case _:
+          print("Resposta inválida")
+          input("Tecle <ENTER> para continuar...")
       os.system('clear')
     case '4':
-      informacoes()
+      print("Movimentão")
+
       os.system('clear')
+    case '5':
+      print("relatorio")
+    case '6':
+      informacoes()
     case '0':
       #sair do programa geral
       end = '0'

@@ -39,14 +39,29 @@ def cadastrarFuncionario():
   print("--------------------")
 
   while True:
-    CPF = input("Digite o CPF do Funcionário: ")
-    if CPF in funcionarios:
+    CPF = input("Digite o CPF do Funcionário: ").strip()
+    if not CPF:
+      print("CPF não pode ser vazio! Por favor, digite um CPF válido.")
+    elif CPF in funcionarios:
       print(
           "Funcionário com este CPF já existe! Por favor, digite um novo CPF.")
     else:
       break
-  nome = input("Digite o nome do Funcionário: ")
-  email = input("Digite o Email do Funcionário: ")
+
+  while True:
+    nome = input("Digite o nome do Funcionário: ").strip()
+    if not nome:
+      print("Nome não pode ser vazio! Por favor, digite um nome válido.")
+    else:
+      break
+
+  while True:
+    email = input("Digite o Email do Funcionário: ").strip()
+    if not email:
+      print("Email não pode ser vazio! Por favor, digite um email válido.")
+    else:
+      break
+
   funcionarios[CPF] = [nome, email]
 
   print("Funcionário cadastrado com sucesso!")
@@ -56,6 +71,7 @@ def cadastrarFuncionario():
   print("##### EMAIL: ", funcionarios[CPF][1])
 
   salvarFuncionarios()
+  input("Pressione ENTER para continuar")
 
 
 def BuscarFuncionario():
@@ -124,21 +140,22 @@ def excluirFuncionario():
   CPF = input("Qual é o CPF do Funcionário que deseja excluir? ")
 
   if CPF in funcionarios:
-      print("Funcionário encontrado:")
-      print("##### CPF:", CPF)
-      print("##### Nome:", funcionarios[CPF][0])
-      print("##### Email:", funcionarios[CPF][1])
-      print("--------------------")
+    print("Funcionário encontrado:")
+    print("##### CPF:", CPF)
+    print("##### Nome:", funcionarios[CPF][0])
+    print("##### Email:", funcionarios[CPF][1])
+    print("--------------------")
 
-      confirmacao = input("Tem certeza que deseja excluir este funcionário? (s/n): ").lower()
-      if confirmacao == 's':
-          del funcionarios[CPF]
-          print("Funcionário excluído com sucesso!")
-          salvarFuncionarios()
-      else:
-          print("Exclusão cancelada.")
+    confirmacao = input(
+        "Tem certeza que deseja excluir este funcionário? (s/n): ").lower()
+    if confirmacao == 's':
+      del funcionarios[CPF]
+      print("Funcionário excluído com sucesso!")
+      salvarFuncionarios()
+    else:
+      print("Exclusão cancelada.")
   else:
-      print("Funcionário não encontrado.")
+    print("Funcionário não encontrado.")
 
   input("Tecle <ENTER> para continuar...")
 
